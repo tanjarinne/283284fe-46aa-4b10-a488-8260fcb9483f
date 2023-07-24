@@ -1,0 +1,9 @@
+services:
+  aerospike:
+    image: aerospike:ce-6.3.0.5_1
+    volumes:
+      - ./aerospike/data:/opt/aerospike/data
+    ports:
+      - 3000:3000
+    expose:
+      - 3000:3000
