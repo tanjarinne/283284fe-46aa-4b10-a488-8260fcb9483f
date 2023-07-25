@@ -9,6 +9,7 @@ mod structures;
 use structures::HealthResponse;
 
 mod db;
+mod shortener;
 
 #[launch]
 fn rocket() -> _ {
