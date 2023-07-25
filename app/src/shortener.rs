@@ -19,12 +19,11 @@ mod tests {
   fn test_shortened_url_format() {
     let url = "https://foo.com/";
     let result = generate_shortened_hash(url);
-    let pattern = r"^[a-zA-Z0-9]{9}$";
-    let validator = Regex::new(pattern).unwrap();
-    let is_valid = validator.is_match(&result);
+    let validator = Regex::new(r"^[a-zA-Z0-9]{9}$").unwrap();
 
     assert_eq!(result.len(), 9);
-    assert_eq!(is_valid, true);
+    assert_eq!(validator.is_match(&result), true);
+    assert_eq!("0d43b1693", result);
   }
 
   #[test]
@@ -40,6 +39,10 @@ mod tests {
     assert_eq!(result2, result3);
     assert_eq!(result1, result4);
     assert_eq!(result2, result4);
+    assert_eq!("9f161af1f", result1);
+    assert_eq!("9f161af1f", result2);
+    assert_eq!("9f161af1f", result3);
+    assert_eq!("9f161af1f", result4);
   }
 
   #[test]
@@ -48,5 +51,6 @@ mod tests {
     let result = generate_shortened_hash(url);
 
     assert_ne!(result, "");
+    assert_eq!("26dd9ca46", result);
   }
 }
