@@ -1,5 +1,13 @@
+use ring::digest::{digest, SHA256};
+
 pub fn generate_shortened_hash(input: &str) -> String {
-  input.to_string()
+  let hash = digest(&SHA256, input.as_bytes());
+  let mut hex_hash = String::new();
+  for byte in hash.as_ref() {
+    hex_hash.push_str(&format!("{:02x}", byte));
+  }
+
+  hex_hash.chars().take(9).collect::<String>()
 }
 
 #[cfg(test)]
@@ -24,8 +32,14 @@ mod tests {
     let url = "https://example.here/foo/bar";
     let result1 = generate_shortened_hash(url);
     let result2 = generate_shortened_hash(url);
+    let result3 = generate_shortened_hash(url);
+    let result4 = generate_shortened_hash(url);
 
     assert_eq!(result1, result2);
+    assert_eq!(result1, result3);
+    assert_eq!(result2, result3);
+    assert_eq!(result1, result4);
+    assert_eq!(result2, result4);
   }
 
   #[test]
