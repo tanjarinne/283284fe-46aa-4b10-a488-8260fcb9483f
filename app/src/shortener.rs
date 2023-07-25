@@ -28,21 +28,15 @@ mod tests {
 
   #[test]
   fn test_collission() {
-    let url = "https://example.here/foo/bar";
-    let result1 = generate_shortened_hash(url);
-    let result2 = generate_shortened_hash(url);
-    let result3 = generate_shortened_hash(url);
-    let result4 = generate_shortened_hash(url);
+    use rand::Rng;
 
-    assert_eq!(result1, result2);
-    assert_eq!(result1, result3);
-    assert_eq!(result2, result3);
-    assert_eq!(result1, result4);
-    assert_eq!(result2, result4);
-    assert_eq!("9f161af1f", result1);
-    assert_eq!("9f161af1f", result2);
-    assert_eq!("9f161af1f", result3);
-    assert_eq!("9f161af1f", result4);
+    let mut rng = rand::thread_rng();
+    let url = format!("https://example.here/foo/bar/{}/", rng.gen_range(0..=99));
+    let first_result = generate_shortened_hash(&url);
+    for _ in 1..10000 {
+      let new_result = generate_shortened_hash(&url);
+      assert_eq!(first_result, new_result);
+    }
   }
 
   #[test]
