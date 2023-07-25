@@ -27,7 +27,7 @@ mod tests {
   }
 
   #[test]
-  fn test_collision() {
+  fn test_repeatability() {
     use rand::Rng;
 
     let mut rng = rand::thread_rng();
@@ -37,6 +37,29 @@ mod tests {
       let new_result = generate_shortened_hash(&url);
       assert_eq!(first_result, new_result);
     }
+  }
+
+  #[test]
+  fn test_collision() {
+    let urls = vec![
+      "Hello, World!",
+      "Lorem ipsum dolor sit amet",
+      "1234567890",
+      "a",
+      "ab",
+      "",
+      "https://fizz.com/buzz?foo=bar",
+      "https://fizz.com/buzz?bar=foo",
+      "https://fizz.com/buzz?bar=fo",
+      "https://example.here/foo/bar/",
+    ];
+    let mut hashes = std::collections::HashSet::new();
+    for url in &urls {
+      let hash = generate_shortened_hash(url);
+      assert!(!hashes.contains(&hash), "Collision detected for {}", hash);
+      hashes.insert(hash);
+    }
+    assert_eq!(hashes.len(), urls.len());
   }
 
   #[test]
