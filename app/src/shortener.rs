@@ -27,7 +27,7 @@ mod tests {
   }
 
   #[test]
-  fn test_collission() {
+  fn test_collision() {
     use rand::Rng;
 
     let mut rng = rand::thread_rng();
