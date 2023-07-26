@@ -1,8 +1,16 @@
-use aerospike::{Client, ClientPolicy, WritePolicy, as_key, as_bin};
+use aerospike::{Client, ClientPolicy, WritePolicy, as_key, as_bin, ReadPolicy, Bins, Record};
 use rocket::State;
 
 pub struct AppState {
   pub aerospike: Client,
+}
+
+pub fn get_record(state: &State<AppState>, url_hash: String) -> Result<Record, String> {
+    let key = as_key!("test", "urls", &url_hash.to_string());
+    match state.aerospike.get(&ReadPolicy::default(), &key, Bins::from(["long_url"])) {
+        Ok(record) => Ok(record),
+        Err(err) => Err((&err).to_string()),
+    }
 }
 
 pub fn put_record(state: &State<AppState>, long_url: String, url_hash: String) -> Result<(), String> {
