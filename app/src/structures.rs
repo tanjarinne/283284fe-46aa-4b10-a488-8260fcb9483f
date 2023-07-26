@@ -16,3 +16,8 @@ pub struct HealthResponse {
   pub status: String,
   pub message: String,
 }
+
+#[derive(Serialize)]
+pub struct ErrorResponse {
+  pub message: String,
+}

@@ -1,7 +1,19 @@
-use aerospike::{Client, ClientPolicy};
+use aerospike::{Client, ClientPolicy, WritePolicy, as_key, as_bin};
+use rocket::State;
 
 pub struct AppState {
   pub aerospike: Client,
+}
+
+pub fn put_record(state: &State<AppState>, long_url: String, url_hash: String) -> Result<(), String> {
+  let policy = WritePolicy::default();
+  let key = as_key!("test", "urls", url_hash.as_str());
+  let bin = as_bin!("long_url", long_url.as_str());
+
+  match state.aerospike.put(&policy, &key, &vec![&bin]) {
+    Ok(()) => Ok(()),
+    Err(err) => Err((&err).to_string()),
+  }
 }
 
 pub fn mount_aerospike_client() -> AppState {

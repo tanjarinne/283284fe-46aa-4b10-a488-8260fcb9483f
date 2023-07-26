@@ -1,4 +1,4 @@
-use rocket::State;
+use rocket::{State, response::status::Custom};
 use rocket::serde::json::Json;
 use rocket::http::Status;
 
@@ -6,7 +6,7 @@ use rocket::http::Status;
 extern crate rocket;
 
 mod structures;
-use structures::{HealthResponse, UrlRequest, Response};
+use structures::{HealthResponse, UrlRequest, Response, ErrorResponse};
 
 mod db;
 
@@ -30,10 +30,19 @@ pub async fn healthcheck(state: &State<db::AppState>) -> Result<Json<HealthRespo
 }
 
 #[post("/url", data="<body>")]
-pub async fn handle_new_url(state: &State<db::AppState>, body: Json<UrlRequest<'_>>) -> Result<Json<Response>, Status> {
+pub async fn handle_new_url(state: &State<db::AppState>, body: Json<UrlRequest<'_>>) -> Result<Json<Response>, Custom<Json<ErrorResponse>>> {
+    let url_hash = generate_shortened_hash(&body.url.to_string());
     let response = Response {
-        shorten_url: generate_shortened_hash(&body.url.to_string()),
+        shorten_url: url_hash.clone(),
         url        : body.url.to_string(),
     };
-    Ok(Json(response))
+    match db::put_record(state, body.url.to_string(), url_hash.clone()) {
+        Ok(()) => Ok(Json(response)),
+        Err(e) => {
+            let response = ErrorResponse {
+                message: e.to_string(),
+            };
+            Err(Custom(Status::InternalServerError, Json(response)))
+        }
+    }
 }
