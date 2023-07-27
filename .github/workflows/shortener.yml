@@ -1,13 +1,8 @@
 name: Shortener pull request pipelines
 on:
   pull_request:
-    types:
-    - opened
-    - reopened
-    - unlocked
-    - edited
     branches:
-    - "main"
+    - 'feature/**'
 
 jobs:
 
