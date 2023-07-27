@@ -5,6 +5,7 @@ on:
     - opened
     - reopened
     - unlocked
+    - edited
     branches:
     - "main"
 
