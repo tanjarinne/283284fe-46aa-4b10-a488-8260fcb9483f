@@ -9,6 +9,6 @@ RUN set -xe ;\
 
 FROM alpine
 COPY --from=builder /usr/local/cargo/bin/shortener /usr/local/bin/shortener
-COPY --from=builder /app/Rocket-compose.toml /app/Rocket.toml
+COPY --from=builder /app/Rocket-container.toml /app/Rocket.toml
 ENV ROCKET_CONFIG=/app/Rocket.toml
 CMD ["shortener"]
