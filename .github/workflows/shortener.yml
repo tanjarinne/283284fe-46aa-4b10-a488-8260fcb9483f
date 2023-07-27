@@ -1,6 +1,14 @@
 name: Shortener pull request pipelines
 on:
+  push:
+    branches:
+      - 'feature/**'
   pull_request:
+    types:
+    - opened
+    - reopened
+    - unlocked
+    - edited
     branches:
     - 'feature/**'
 
