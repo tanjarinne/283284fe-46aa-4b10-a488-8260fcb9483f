@@ -36,6 +36,6 @@ jobs:
         with:
           push: true
           context: .
-          file: Containerfile
+          file: app/Containerfile
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
