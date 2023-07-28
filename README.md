@@ -13,9 +13,9 @@ It is written in Rust, using the Rocket web framework and Aerospike as a persist
 
 To create a **development** environment, a local Rust toolchain is necessary. [`rustup`](https://rustup.rs/) is recommended.
 
-This repository provides a Docker Compose file that simplifies setting up an environment, but it's not the only way to set it up.
+This repository provides a [Compose](https://compose-spec.io/) file that simplifies setting up an environment, but it's not the only way to set it up.
 
-### Requirements (for when **not** using Docker Compose):
+### Requirements (for when **not** using a container):
 
 - [Aerospike Community Edition](https://github.com/aerospike/aerospike-server/releases)
 - The Rust language
@@ -47,7 +47,7 @@ Will be most comfortable to use it as a development environment.
 
 | Step | Command & example output | Commentary |
 |---|---|---|
-| 1 | <pre>~ podman-compose up aerospike -d</pre> Or <pre>~ docker compose up aerospike -d</pre> | Start Aerospike in daemon mode (using Docker Compose) |
+| 1 | <pre>~ podman-compose up aerospike -d</pre> Or <pre>~ docker compose up aerospike -d</pre> | Start Aerospike in daemon mode |
 | 2 | <pre>~ cd app</pre> | Change directory to _the app_ |
 | 3 | <pre>app~ cp Rocket-example.toml Rocket.toml<br>app~ vim Rocket.toml</pre> | [Configure the app](https://rocket.rs/v0.5-rc/guide/configuration/) |
 | 4 | <pre>app~ cargo watch -q -c -w src/ -x run</pre>Or without `cargo watch`:<br><pre>app~ cargo run</pre> | Run Shortener |
