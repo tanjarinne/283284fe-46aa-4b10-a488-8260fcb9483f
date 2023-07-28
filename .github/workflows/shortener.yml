@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . --file Containerfile
+        run: docker compose build shortener
 
   podman-build:
     runs-on: ubuntu-latest
