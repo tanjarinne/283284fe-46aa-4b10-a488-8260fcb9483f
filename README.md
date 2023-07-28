@@ -4,6 +4,11 @@ Shortener is a simple application that shortens URLs into something easier to sh
 
 It is written in Rust, using the Rocket web framework and Aerospike as a persistance layer.
 
+***Table of Contents***
+
+* [Development Environment](#up-and-away-locally)
+* []
+
 ## Up and away (locally)
 
 To create a **development** environment, a local Rust toolchain is necessary. [`rustup`](https://rustup.rs/) is recommended.
@@ -32,7 +37,7 @@ The project will run with baseline configurations.
 
 ### 2. the most efficient way
 
-
+Will be most comfortable to use it as a development environment.
 
 | Pros | Cons |
 |---|---|
@@ -43,7 +48,9 @@ The project will run with baseline configurations.
 | 1 | <pre>~ docker-compose up aerospike -d</pre> | Start Aerospike in daemon mode (using Docker Compose) |
 | 2 | <pre>~ cd app</pre> | Change directory to _the app_ |
 | 3 | <pre>app~ cp Rocket-example.toml Rocket.toml<br>app~ vim Rocket.toml</pre> | [Configure the app](https://rocket.rs/v0.5-rc/guide/configuration/) |
-| 4 | <pre>app~ cargo watch -q -c -w src/ -x run</pre> | Run Shortener |
+| 4 | <pre>app~ cargo watch -q -c -w src/ -x run</pre>Or without `cargo watch`:<br><pre>app~ cargo run</pre> | Run Shortener |
+
+##
 
 # Author
 Tanja Álvarez, 2023
