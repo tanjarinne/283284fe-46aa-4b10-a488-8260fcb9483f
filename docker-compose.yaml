@@ -8,7 +8,7 @@ services:
     environment:
       - AEROSPIKE_HOSTS=aerospike:3000
     ports:
-      - 8990:8990
+      - "8990:8990"
     depends_on:
       aerospike:
         condition: service_healthy
@@ -18,9 +18,9 @@ services:
     volumes:
       - ./aerospike/data:/opt/aerospike/data
     ports:
-      - 3000:3000
+      - "3000:3000"
     expose:
-      - 3000:3000
+      - "3000"
     healthcheck:
       test: asinfo -h localhost -p 3000 -v status
       timeout: 2s
