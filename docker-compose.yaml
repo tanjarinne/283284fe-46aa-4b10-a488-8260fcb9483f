@@ -1,9 +1,29 @@
 services:
+  shortener:
+    build:
+      context: ./app
+      dockerfile: Containerfile
+    image: shortener
+    restart: unless-stopped
+    environment:
+      - AEROSPIKE_HOSTS=aerospike:3000
+    ports:
+      - "8990:8990"
+    depends_on:
+      aerospike:
+        condition: service_healthy
+
   aerospike:
     image: aerospike:ce-6.3.0.5_1
     volumes:
       - ./aerospike/data:/opt/aerospike/data
     ports:
-      - 3000:3000
+      - "3000:3000"
     expose:
-      - 3000:3000
+      - "3000"
+    healthcheck:
+      test: asinfo -h localhost -p 3000 -v status
+      timeout: 2s
+      retries: 5
+      interval: 3s
+      start_period: 5s
